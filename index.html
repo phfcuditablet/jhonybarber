@@ -54,7 +54,7 @@
             <div class="about-text">
                 <span class="section-subtitle">CONHEÇA NOSSO ESPAÇO</span>
                 <h2>Um espaço feito pensando no seu bem-estar</h2>
-                <p>No <strong>Jhony Barber</strong>, acreditamos que cada detalhe importa. Desde a nossa decoração acolhedora até o atendimento atencioso, cada corte e procedimento é feito com muito carinho e dedicação.</p>
+                <p>No <strong>Jhony Barber</strong>, acreditamos que cada detalhe importa. Desde a nossa decoração acolhedor até o atendimento atencioso, cada corte e procedimento é feito com muito carinho e dedicação.</p>
                 <p>Aqui você não vem apenas para cortar o cabelo ou fazer a barba — vem para relaxar, se sentir em casa e renovar a sua melhor versão.</p>
                 <div class="features">
                     <div class="feature-item">
@@ -83,62 +83,8 @@
                 <p>Confira nossos cuidados masculinos e infantis preparados especialmente para você.</p>
             </div>
 
-            <div class="services-grid">
-                <div class="service-card" data-service-id="corte-masculino">
-                    <div class="service-icon"><i class="fas fa-cut"></i></div>
-                    <h3>Corte Masculino Adulto</h3>
-                    <p>Tesoura ou máquina, perfeitamente alinhado com o seu estilo e formato de rosto.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="corte-infantil">
-                    <div class="service-icon"><i class="fas fa-child"></i></div>
-                    <h3>Corte Infantil</h3>
-                    <p>Atendimento paciente e carinhoso para garantir a melhor experiência para os pequenos.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="pigmentacao-barba">
-                    <div class="service-icon"><i class="fas fa-user-ninja"></i></div>
-                    <h3>Pigmentação de Barba</h3>
-                    <p>Cobertura de falhas e realce impecável do contorno para uma barba marcante.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="micropigmentacao-sobrancelha">
-                    <div class="service-icon"><i class="fas fa-eye"></i></div>
-                    <h3>Micropigmentação de Sobrancelha</h3>
-                    <p>Design natural para valorizar o olhar masculino com simetria e sutileza.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="depilacao-costas">
-                    <div class="service-icon"><i class="fas fa-spa"></i></div>
-                    <h3>Depilação das Costas</h3>
-                    <p>Remoção eficiente de pêlos para maior conforto, bem-estar e higiene.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="remocao-nariz">
-                    <div class="service-icon"><i class="fas fa-air-freshener"></i></div>
-                    <h3>Remoção de Pêlos do Nariz</h3>
-                    <p>Higiene prática e acabamento preciso sem desconforto.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="remocao-orelhas">
-                    <div class="service-icon"><i class="fas fa-deaf"></i></div>
-                    <h3>Remoção de Pêlos das Orelhas</h3>
-                    <p>Procedimento rápido e cuidadoso para um visual limpo e bem cuidado.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
-
-                <div class="service-card" data-service-id="remocao-axilas">
-                    <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <h3>Remoção de Pêlos das Axilas</h3>
-                    <p>Cuidado e higiene essenciais para a sua rotina no dia a dia.</p>
-                    <span class="price-tag">Consulte valor</span>
-                </div>
+            <div class="services-grid" id="services-grid-container">
+                <!-- Preenchido via JavaScript -->
             </div>
         </div>
     </section>
@@ -193,30 +139,34 @@
                 <p>Digite a senha de administrador:</p>
                 <input type="password" id="admin-password" placeholder="Sua senha...">
                 <button id="btn-confirm-login" class="btn btn-whatsapp" style="width: 100%; margin-top: 15px;">Entrar</button>
-                <p id="login-error" class="error-msg"></p>
+                <p id="login-error" class="error-msg" style="color: #ff5555; margin-top: 10px; font-size: 0.9rem;"></p>
             </div>
             <div id="admin-panel-step" style="display: none;">
                 <h2>Painel de Gerenciamento</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Atualize os preços e links das redes sociais. As alterações são salvas automaticamente no seu navegador.</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Atualize os preços, serviços e links. Salvo automaticamente.</p>
                 
                 <h3>Redes Sociais & Localização</h3>
-                <div class="form-group">
-                    <label>Link do Instagram:</label>
-                    <input type="text" id="input-instagram" placeholder="https://instagram.com/seu_perfil">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Instagram:</label>
+                    <input type="text" id="input-instagram" placeholder="https://instagram.com/seu_perfil" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
                 </div>
-                <div class="form-group">
-                    <label>Link do Facebook:</label>
-                    <input type="text" id="input-facebook" placeholder="https://facebook.com/sua_pagina">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Facebook:</label>
+                    <input type="text" id="input-facebook" placeholder="https://facebook.com/sua_pagina" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
                 </div>
-                <div class="form-group">
-                    <label>Link do Google Maps (Como Chegar):</label>
-                    <input type="text" id="input-maps" placeholder="https://maps.google.com/?q=barbearia">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Google Maps (Como Chegar):</label>
+                    <input type="text" id="input-maps" placeholder="https://maps.google.com/?q=barbearia" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
                 </div>
 
-                <h3 style="margin-top: 20px;">Tabela de Preços</h3>
-                <div id="prices-form-container"></div>
+                <h3 style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">Gerenciar Serviços</h3>
+                <div id="admin-services-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;"></div>
 
-                <button id="btn-save-admin" class="btn btn-whatsapp" style="width: 100%; margin-top: 20px;">Salvar Alterações</button>
+                <button id="btn-add-new-service" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent); margin-bottom: 15px;">
+                    <i class="fas fa-plus"></i> Adicionar Novo Serviço
+                </button>
+
+                <button id="btn-save-admin" class="btn btn-whatsapp" style="width: 100%; margin-top: 10px;">Salvar Alterações</button>
                 <button id="btn-logout-admin" class="btn btn-outline" style="width: 100%; margin-top: 10px; border-color: #ff5555; color: #ff5555;">Sair do Painel</button>
             </div>
         </div>
