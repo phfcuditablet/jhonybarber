@@ -137,7 +137,7 @@ body {
     margin-bottom: 35px;
 }
 
-.hero-btns {
+.hero-btns, .cta-btns {
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -153,6 +153,7 @@ body {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .btn-whatsapp {
@@ -227,7 +228,6 @@ body {
 
 .feature-item i {
     color: var(--accent-gold);
-
 }
 
 /* Services */
@@ -283,9 +283,9 @@ body {
 
 .price-tag {
     display: inline-block;
-    font-size: 0.85rem;
+    font-size: 1.1rem;
     color: var(--accent-gold);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* CTA Banner */
@@ -338,6 +338,33 @@ body {
     font-size: 0.9rem;
 }
 
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.social-links a:hover {
+    background-color: var(--accent-gold);
+    color: #121212;
+    transform: translateY(-3px);
+}
+
 .copyright {
     margin-top: 20px;
     font-size: 0.8rem !important;
@@ -361,9 +388,99 @@ body {
     color: var(--accent-gold);
 }
 
+.admin-trigger-container {
+    margin-top: 25px;
+}
+
+#btn-admin-login {
+    background: transparent;
+    border: none;
+    color: #333333;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#btn-admin-login:hover {
+    color: var(--accent-gold);
+}
+
+/* Modal Admin */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid var(--accent-gold);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    color: var(--text-light);
+}
+
+.close-modal {
+    color: var(--text-muted);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: var(--accent-gold);
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--text-muted);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"] {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background-color: #121212;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+}
+
+.error-msg {
+    color: #ff5555;
+    font-size: 0.85rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .nav-menu {
-        display: none; /* Em projetos avançados, pode-se incluir menu hambúrguer */
+        display: none;
     }
     .hero h1 {
         font-size: 1.8rem;
