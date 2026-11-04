@@ -1,13 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     const defaultServices = [
-        { id: 'corte-masculino', title: 'Corte Masculino Adulto', desc: 'Tesoura ou máquina, perfeitamente alinhado com o seu estilo e formato de rosto.', price: 'Consulte valor', icon: 'fas fa-cut' },
+        { id: 'corte-masculino', title: 'Corte Masculino Adulto', desc: 'Tesoura ou máquina, perfeitamente alinhado com o seu estilo e formato de rosto.', price: 'R$ 48,00', icon: 'fas fa-cut' },
+        { id: 'corte-navalhado', title: 'Corte Navalhado', desc: 'Acabamento ultra preciso e degradê liso feito na navalha.', price: 'R$ 50,00', icon: 'fas fa-cut' },
+        { id: 'corte-social', title: 'Corte Social', desc: 'Corte clássico e alinhado, ideal para o dia a dia e ambientes formais.', price: 'R$ 50,00', icon: 'fas fa-user-tie' },
+        { id: 'barba', title: 'Barba', desc: 'Modelagem, alinhamento e toalha quente para uma barba impecável.', price: 'R$ 45,00', icon: 'fas fa-user-ninja' },
+        { id: 'corte-e-barba', title: 'Corte e Barba', desc: 'Combo completo para renovar o visual do cabelo e da barba com desconto.', price: 'R$ 80,00', icon: 'fas fa-scissors' },
         { id: 'corte-infantil', title: 'Corte Infantil', desc: 'Atendimento paciente e carinhoso para garantir a melhor experiência para os pequenos.', price: 'Consulte valor', icon: 'fas fa-child' },
-        { id: 'pigmentacao-barba', title: 'Pigmentação de Barba', desc: 'Cobertura de falhas e realce impecável do contorno para uma barba marcante.', price: 'Consulte valor', icon: 'fas fa-user-ninja' },
+        { id: 'sobrancelha-navalha', title: 'Sobrancelha Navalha', desc: 'Design e limpeza rápida das sobrancelhas feita na navalha.', price: 'R$ 25,00', icon: 'fas fa-eye' },
+        { id: 'sobrancelha-cera', title: 'Sobrancelha Cera', desc: 'Remoção e modelagem de alta precisão duradoura com cera especial.', price: 'R$ 30,00', icon: 'fas fa-spa' },
         { id: 'micropigmentacao-sobrancelha', title: 'Micropigmentação de Sobrancelha', desc: 'Design natural para valorizar o olhar masculino com simetria e sutileza.', price: 'Consulte valor', icon: 'fas fa-eye' },
-        { id: 'depilacao-costas', title: 'Depilação das Costas', desc: 'Remoção eficiente de pêlos para maior conforto, bem-estar e higiene.', price: 'Consulte valor', icon: 'fas fa-spa' },
-        { id: 'remocao-nariz', title: 'Remoção de Pêlos do Nariz', desc: 'Higiene prática e acabamento preciso sem desconforto.', price: 'Consulte valor', icon: 'fas fa-air-freshener' },
-        { id: 'remocao-orelhas', title: 'Remoção de Pêlos das Orelhas', desc: 'Procedimento rápido e cuidadoso para um visual limpo e bem cuidado.', price: 'Consulte valor', icon: 'fas fa-deaf' },
-        { id: 'remocao-axilas', title: 'Remoção de Pêlos das Axilas', desc: 'Cuidado e higiene essenciais para a sua rotina no dia a dia.', price: 'Consulte valor', icon: 'fas fa-hand-holding-heart' }
+        { id: 'pigmento-cabelo', title: 'Pigmento Cabelo', desc: 'Cobertura de fios brancos e realce do degradê no cabelo.', price: 'R$ 50,00', icon: 'fas fa-paint-brush' },
+        { id: 'pigmentacao-barba', title: 'Pigmentação de Barba', desc: 'Cobertura de falhas e realce impecável do contorno para uma barba marcante.', price: 'R$ 45,00', icon: 'fas fa-user-ninja' },
+        { id: 'selagem', title: 'Selagem', desc: 'Tratamento de alinhamento e redução de volume para cabelos masculinos.', price: 'R$ 90,00', icon: 'fas fa-pump-soap' },
+        { id: 'selagem-e-corte', title: 'Selagem e Corte', desc: 'Tratamento completo de selagem junto com alinhamento do corte.', price: 'R$ 120,00', icon: 'fas fa-cut' },
+        { id: 'remocao-nariz-orelha', title: 'Remoção de Pêlo Nariz ou Orelha', desc: 'Higiene prática e remoção precisa sem desconforto.', price: 'R$ 30,00', icon: 'fas fa-air-freshener' },
+        { id: 'remocao-axilas', title: 'Remoção de Pêlos das Axilas', desc: 'Cuidado e higiene essenciais para a sua rotina no dia a dia.', price: 'R$ 40,00', icon: 'fas fa-hand-holding-heart' },
+        { id: 'depilacao-costas', title: 'Depilação das Costas', desc: 'Remoção eficiente de pêlos para maior conforto, bem-estar e higiene.', price: 'Consulte valor', icon: 'fas fa-spa' }
     ];
 
     const defaultSocials = {
