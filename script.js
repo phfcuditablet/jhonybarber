@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Senha padrão configurada (Pode ser alterada aqui no código)
-    const ADMIN_PASSWORD = "admin";
+    const ADMIN_PASSWORD = "jhonybarber@123";
 
     // Elementos do Modal
     const modal = document.getElementById("admin-modal");
