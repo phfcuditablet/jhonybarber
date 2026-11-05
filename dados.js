@@ -16,14 +16,14 @@ const defaultSiteData = {
             "role": "MASTER BARBER & FUNDADOR",
             "photo": "https://phfcuditablet.github.io/jhonybarber/imagens/barbeiro1.jpg",
             "exp": "Mais de 12 anos de experiência especialista em cortes clássicos, degradês modernos e barba na toalha quente.",
-            "instagram": "https://instagram.com"
+            "instagram": "https://www.instagram.com/jhony.barberoficial/"
         },
         {
             "name": "Jefferson",
             "role": "BARBEIRO ESPECIALISTA",
             "photo": "https://phfcuditablet.github.io/jhonybarber/imagens/barbeiro2.png",
             "exp": "8 anos de carreira focado em cortes infantis, pigmentação de barba e acabamentos ultra precisos.",
-            "instagram": "https://instagram.com"
+            "instagram": "https://www.instagram.com/jeffersonmorais_63/"
         }
     ],
     "aboutSubtitle": "CONHEÇA NOSSO ESPAÇO",
