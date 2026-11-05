@@ -143,7 +143,7 @@
             </div>
             <div id="admin-panel-step" style="display: none;">
                 <h2>Painel de Gerenciamento</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Atualize os preços, serviços e redes sociais. Alterações salvas no navegador.</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Atualize os preços, serviços e redes sociais. Salve as alterações ou exporte/importe as configurações para backup permanente.</p>
                 
                 <h3>Redes Sociais & Localização</h3>
                 <div class="form-group" style="margin-bottom: 12px;">
@@ -166,8 +166,28 @@
                     <i class="fas fa-plus"></i> Adicionar Novo Serviço
                 </button>
 
-                <button id="btn-save-admin" class="btn btn-whatsapp" style="width: 100%; margin-top: 10px;">Salvar Alterações</button>
-                <button id="btn-logout-admin" class="btn btn-outline" style="width: 100%; margin-top: 10px; border-color: #ff5555; color: #ff5555;">Sair do Painel</button>
+                <button id="btn-save-admin" class="btn btn-whatsapp" style="width: 100%; margin-top: 10px;">
+                    <i class="fas fa-save"></i> Salvar Alterações (Navegador)
+                </button>
+
+                <!-- Ferramentas de Backup & Exportação de Código -->
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                    <h4 style="font-size: 0.9rem; color: var(--accent); margin-bottom: 10px;">Backup & Sincronização</h4>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button id="btn-export-json" class="btn btn-outline" style="flex: 1; font-size: 0.8rem; padding: 8px;">
+                            <i class="fas fa-download"></i> Baixar Backup (.json)
+                        </button>
+                        <button id="btn-import-trigger" class="btn btn-outline" style="flex: 1; font-size: 0.8rem; padding: 8px;">
+                            <i class="fas fa-upload"></i> Carregar Backup (.json)
+                        </button>
+                        <input type="file" id="input-import-json" accept=".json" style="display: none;">
+                    </div>
+                    <button id="btn-export-code" class="btn btn-outline" style="width: 100%; font-size: 0.8rem; padding: 8px; border-color: var(--accent); color: var(--accent);">
+                        <i class="fas fa-code"></i> Copiar Código para o script.js (Fixar para Todos)
+                    </button>
+                </div>
+
+                <button id="btn-logout-admin" class="btn btn-outline" style="width: 100%; margin-top: 15px; border-color: #ff5555; color: #ff5555;">Sair do Painel</button>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Serviços padrão com a tabela de preços oficial
     const defaultServices = [
         { id: 'corte-masculino', title: 'Corte Masculino Adulto', desc: 'Tesoura ou máquina, perfeitamente alinhado com o seu estilo e formato de rosto.', price: 'R$ 48,00', icon: 'fas fa-cut' },
         { id: 'corte-navalhado', title: 'Corte Navalhado', desc: 'Acabamento ultra preciso e degradê liso feito na navalha.', price: 'R$ 50,00', icon: 'fas fa-cut' },
@@ -19,11 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const defaultSocials = {
-        instagram: 'https://instagram.com',
-        facebook: 'https://facebook.com',
-        maps: 'https://maps.google.com'
+        instagram: 'https://www.instagram.com/jhony.barberoficial/',
+        facebook: 'https://www.facebook.com/joao.dearaujosantosfilho.9',
+        maps: 'https://www.google.com/maps/place/Barbearia+Jhony+Cortes/@-10.183176,-48.3494322,2247m/data=!3m1!1e3!4m6!3m5!1s0x9324cb704dc6c957:0xe6b0c77380e2f4d9!8m2!3d-10.183176!4d-48.339905!16s%2Fg%2F11yv6cbq8_?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D'
     };
 
+    // Carregar do localStorage ou utilizar os padrões
     let services = JSON.parse(localStorage.getItem('jhony_services')) || defaultServices;
     let socials = JSON.parse(localStorage.getItem('jhony_socials')) || defaultSocials;
 
@@ -56,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderServices();
     renderSocials();
 
+    // Gerenciamento do Modal Admin
     const modal = document.getElementById('admin-modal');
     const btnAdminLogin = document.getElementById('btn-admin-login');
     const closeModal = document.querySelector('.close-modal');
@@ -85,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) modal.style.display = 'none';
     });
 
-    const ADMIN_PASSWORD = 'jhonybarber@123';
+    const ADMIN_PASSWORD = 'Maite@1409';
 
     if (btnConfirmLogin) {
         btnConfirmLogin.addEventListener('click', () => {
@@ -157,28 +160,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Coletar dados dos campos editados
+    function getUpdatedDataFromPanel() {
+        const titleInputs = document.querySelectorAll('.admin-s-title');
+        const priceInputs = document.querySelectorAll('.admin-s-price');
+        const descInputs = document.querySelectorAll('.admin-s-desc');
+        const iconInputs = document.querySelectorAll('.admin-s-icon');
+
+        const updatedServices = [];
+        for (let i = 0; i < titleInputs.length; i++) {
+            updatedServices.push({
+                title: titleInputs[i].value,
+                price: priceInputs[i].value,
+                desc: descInputs[i].value,
+                icon: iconInputs[i].value
+            });
+        }
+
+        const updatedSocials = {
+            instagram: document.getElementById('input-instagram').value,
+            facebook: document.getElementById('input-facebook').value,
+            maps: document.getElementById('input-maps').value
+        };
+
+        return { updatedServices, updatedSocials };
+    }
+
+    // Botão Salvar (localStorage no navegador)
     if (btnSaveAdmin) {
         btnSaveAdmin.addEventListener('click', () => {
-            socials.instagram = document.getElementById('input-instagram').value;
-            socials.facebook = document.getElementById('input-facebook').value;
-            socials.maps = document.getElementById('input-maps').value;
-
-            const titleInputs = document.querySelectorAll('.admin-s-title');
-            const priceInputs = document.querySelectorAll('.admin-s-price');
-            const descInputs = document.querySelectorAll('.admin-s-desc');
-            const iconInputs = document.querySelectorAll('.admin-s-icon');
-
-            const updatedServices = [];
-            for (let i = 0; i < titleInputs.length; i++) {
-                updatedServices.push({
-                    title: titleInputs[i].value,
-                    price: priceInputs[i].value,
-                    desc: descInputs[i].value,
-                    icon: iconInputs[i].value
-                });
-            }
-
+            const { updatedServices, updatedSocials } = getUpdatedDataFromPanel();
             services = updatedServices;
+            socials = updatedSocials;
 
             localStorage.setItem('jhony_services', JSON.stringify(services));
             localStorage.setItem('jhony_socials', JSON.stringify(socials));
@@ -186,8 +199,85 @@ document.addEventListener('DOMContentLoaded', () => {
             renderServices();
             renderSocials();
 
-            alert('Alterações salvas com sucesso!');
+            alert('Alterações salvas no seu navegador!');
             modal.style.display = 'none';
+        });
+    }
+
+    // 1. Exportar Backup (.json)
+    const btnExportJson = document.getElementById('btn-export-json');
+    if (btnExportJson) {
+        btnExportJson.addEventListener('click', () => {
+            const { updatedServices, updatedSocials } = getUpdatedDataFromPanel();
+            const dataToExport = {
+                services: updatedServices,
+                socials: updatedSocials
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "jhony_barber_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        });
+    }
+
+    // 2. Importar Backup (.json)
+    const btnImportTrigger = document.getElementById('btn-import-trigger');
+    const inputImportJson = document.getElementById('input-import-json');
+
+    if (btnImportTrigger && inputImportJson) {
+        btnImportTrigger.addEventListener('click', () => {
+            inputImportJson.click();
+        });
+
+        inputImportJson.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    if (importedData.services && importedData.socials) {
+                        services = importedData.services;
+                        socials = importedData.socials;
+
+                        localStorage.setItem('jhony_services', JSON.stringify(services));
+                        localStorage.setItem('jhony_socials', JSON.stringify(socials));
+
+                        renderServices();
+                        renderSocials();
+                        loadAdminPanelData();
+
+                        alert('Backup importado com sucesso!');
+                    } else {
+                        alert('Formato de arquivo JSON inválido.');
+                    }
+                } catch (err) {
+                    alert('Erro ao ler arquivo JSON.');
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
+
+    // 3. Copiar Código para Fixar no script.js no GitHub
+    const btnExportCode = document.getElementById('btn-export-code');
+    if (btnExportCode) {
+        btnExportCode.addEventListener('click', () => {
+            const { updatedServices, updatedSocials } = getUpdatedDataFromPanel();
+            const jsSnippet = `const defaultServices = ${JSON.stringify(updatedServices, null, 4)};
+
+const defaultSocials = ${JSON.stringify(updatedSocials, null, 4)};`;
+            
+            navigator.clipboard.writeText(jsSnippet).then(() => {
+                alert('Código do defaultServices copiado para a área de transferência! Cole este trecho no seu script.js antes de fazer o commit para o GitHub.');
+            }).catch(() => {
+                alert('Não foi possível copiar automaticamente. Use a exportação de backup.');
+            });
         });
     }
 });
