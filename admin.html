@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JSZip para geração automática de ZIP no navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -245,7 +247,7 @@
             </div>
 
             <div class="info-alert-box">
-                <i class="fas fa-folder-open" style="color: var(--accent);"></i> <strong>Dica para Imagens Locais:</strong> Cole o caminho da imagem salva na pasta <code>imagens/</code> (exemplo: <code>imagens/barbeiro1.jpg</code>) ou selecione pelo botão de upload abaixo para usar fotos do computador.
+                <i class="fas fa-file-zipper" style="color: var(--accent);"></i> <strong>Solução Definitiva:</strong> Ao clicar no botão <strong>"Salvar e Gerar .ZIP Completo"</strong>, o navegador baixa um arquivo .ZIP atualizado com o <code>script.js</code> preenchido com todos os novos barbeiros, <code>index.html</code>, <code>admin.html</code>, <code>style.css</code> e as fotos tratadas! Basta descompactar no seu projeto ou subir para o GitHub.
             </div>
 
             <div class="form-group">
@@ -419,17 +421,17 @@
 
         <!-- Ações do Admin -->
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
-            <button id="btn-save-admin-page" class="btn btn-whatsapp" style="width: 100%; font-size: 1.1rem; padding: 15px;">
-                <i class="fas fa-save"></i> Salvar Todas as Alterações no Navegador
+            <button id="btn-save-admin-page" class="btn btn-whatsapp" style="width: 100%; font-size: 1.15rem; padding: 16px; background: #25d366; font-weight: bold;">
+                <i class="fas fa-file-zipper"></i> Salvar e Gerar .ZIP Completo Atualizado
             </button>
 
             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
-                <h4 style="color: var(--accent); margin-bottom: 10px;"><i class="fas fa-cloud-arrow-up"></i> Sincronizar com o GitHub (Para publicar no site)</h4>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Clique no botão abaixo para copiar o código atualizado. Depois, basta colar dentro do seu arquivo <code>script.js</code> no GitHub!</p>
+                <h4 style="color: var(--accent); margin-bottom: 10px;"><i class="fas fa-cloud-arrow-up"></i> Sincronização e Backup</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Ao clicar no botão principal acima, um <strong>.ZIP com TODO O PROJETO ATUALIZADO</strong> (incluindo imagens, script.js alterado e htmls) é gerado na hora no seu computador!</p>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <button id="btn-export-json" class="btn btn-outline" style="flex: 1; font-size: 0.85rem;">
-                        <i class="fas fa-download"></i> Baixar Backup (.json)
+                        <i class="fas fa-download"></i> Baixar Apenas Dados (.json)
                     </button>
                     <button id="btn-import-trigger" class="btn btn-outline" style="flex: 1; font-size: 0.85rem;">
                         <i class="fas fa-upload"></i> Carregar Backup (.json)
@@ -438,7 +440,7 @@
                 </div>
 
                 <button id="btn-export-code" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent); font-weight: bold; padding: 12px;">
-                    <i class="fas fa-code"></i> Copiar Código Completo para script.js
+                    <i class="fas fa-code"></i> Copiar Apenas Código para script.js
                 </button>
             </div>
         </div>
@@ -454,7 +456,7 @@
             const loginError = document.getElementById('login-error');
             const btnLogout = document.getElementById('btn-logout');
 
-            const ADMIN_PASSWORD = '123';
+            const ADMIN_PASSWORD = 'Maite@1409';
 
             if (sessionStorage.getItem('jhony_admin_logged') === 'true') {
                 authContainer.style.display = 'none';
