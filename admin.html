@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <!-- JSZip para geração automática de ZIP no navegador -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <link rel="stylesheet" href="style.css">
     <style>
         body {
             background-color: var(--bg-primary);
@@ -247,8 +247,7 @@
             </div>
 
             <div class="info-alert-box">
-                <i class="fas fa-file-zipper" style="color: var(--accent);"></i> <strong>Solução Definitiva:</strong> Ao clicar no botão <strong>"Salvar e Gerar .ZIP Completo"</strong>, o navegador baixa um arquivo .ZIP atualizado com o <code>script.js</code> preenchido com todos os novos barbeiros, <code>index.html</code>, <code>admin.html</code>, <code>style.css</code> e as fotos tratadas! Basta descompactar no seu projeto ou subir para o GitHub.
-            </div>
+                <i class="fas fa-file-zipper" style="color: var(--accent);"></i> <strong>Como publicar:</strong> clique em <strong>"Salvar e Gerar .ZIP Completo Atualizado"</strong> no final da página. O navegador baixa um .ZIP com o <code>dados.js</code> atualizado (barbeiros, serviços e textos), as fotos enviadas já convertidas em arquivos dentro de <code>imagens/</code> e os demais arquivos do site. Basta descompactar e substituir no seu projeto ou subir para o GitHub. <br><strong>Fotos:</strong> você pode colar um caminho como <code>imagens/barbeiro1.jpg</code> ou usar o botão de upload.</div>
 
             <div class="form-group">
                 <label>Subtítulo da Seção Equipe:</label>
@@ -421,13 +420,13 @@
 
         <!-- Ações do Admin -->
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
-            <button id="btn-save-admin-page" class="btn btn-whatsapp" style="width: 100%; font-size: 1.15rem; padding: 16px; background: #25d366; font-weight: bold;">
+            <button id="btn-save-admin-page" class="btn btn-whatsapp" style="width: 100%; font-size: 1.15rem; padding: 16px; font-weight: bold;">
                 <i class="fas fa-file-zipper"></i> Salvar e Gerar .ZIP Completo Atualizado
             </button>
 
             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
                 <h4 style="color: var(--accent); margin-bottom: 10px;"><i class="fas fa-cloud-arrow-up"></i> Sincronização e Backup</h4>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Ao clicar no botão principal acima, um <strong>.ZIP com TODO O PROJETO ATUALIZADO</strong> (incluindo imagens, script.js alterado e htmls) é gerado na hora no seu computador!</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">O botão principal acima salva no navegador e gera o <strong>.ZIP atualizado</strong> na hora. Se preferir o método manual, use o botão abaixo e cole o código dentro do arquivo <code>dados.js</code>.</p>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <button id="btn-export-json" class="btn btn-outline" style="flex: 1; font-size: 0.85rem;">
@@ -440,12 +439,13 @@
                 </div>
 
                 <button id="btn-export-code" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent); font-weight: bold; padding: 12px;">
-                    <i class="fas fa-code"></i> Copiar Apenas Código para script.js
+                    <i class="fas fa-code"></i> Copiar Apenas Código para dados.js
                 </button>
             </div>
         </div>
     </div>
 
+    <script src="dados.js"></script>
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
