@@ -37,11 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
         services.forEach(service => {
             const card = document.createElement('div');
             card.className = 'service-card';
+            
+            // Verificar se o preço é 'Consulte valor' (ignorando maiúsculas/minúsculas)
+            const isConsulteValor = service.price.trim().toLowerCase() === 'consulte valor';
+            
+            let priceElementHtml = '';
+            if (isConsulteValor) {
+                const whatsappMsg = encodeURIComponent(`Olá! Gostaria de consultar o valor do serviço: ${service.title}.`);
+                priceElementHtml = `<a class="btn btn-whatsapp btn-large price-tag-link" href="https://wa.me/5563984257185?text=${whatsappMsg}" target="_blank"><i class="fab fa-whatsapp"></i> Consulte valor</a>`;
+            } else {
+                priceElementHtml = `<span class="price-tag">${service.price}</span>`;
+            }
+
             card.innerHTML = `
                 <div class="service-icon"><i class="${service.icon || 'fas fa-cut'}"></i></div>
                 <h3>${service.title}</h3>
                 <p>${service.desc}</p>
-                <span class="price-tag">${service.price}</span>
+                ${priceElementHtml}
             `;
             container.appendChild(card);
         });
@@ -153,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             services.push({
                 title: 'Novo Serviço',
                 desc: 'Descrição detalhada do serviço.',
-                price: 'R$ 00,00',
+                price: 'Consulte valor',
                 icon: 'fas fa-cut'
             });
             renderAdminServicesList();
@@ -274,9 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const defaultSocials = ${JSON.stringify(updatedSocials, null, 4)};`;
             
             navigator.clipboard.writeText(jsSnippet).then(() => {
-                alert('Código do defaultServices copiado para a área de transferência! Cole este trecho no seu script.js antes de fazer o commit para o GitHub.');
+                alert('Código copiado! Abra o script.js no seu computador/GitHub e substitua o bloco defaultServices inicial.');
             }).catch(() => {
-                alert('Não foi possível copiar automaticamente. Use a exportação de backup.');
+                alert('Não foi possível copiar automaticamente.');
             });
         });
     }
