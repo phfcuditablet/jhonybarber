@@ -18,8 +18,8 @@
     <header class="header">
         <div class="container nav-container">
             <div class="logo">
-                <span class="logo-title">JHONY BARBER</span>
-                <span class="logo-sub">J B • HOMENS TAMBÉM SE CUIDAM</span>
+                <span class="logo-title" id="display-logo-title">JHONY BARBER</span>
+                <span class="logo-sub" id="display-logo-sub">J B • HOMENS TAMBÉM SE CUIDAM</span>
             </div>
             <nav class="nav-menu">
                 <a href="#inicio">Início</a>
@@ -34,15 +34,15 @@
     <section id="inicio" class="hero">
         <div class="overlay"></div>
         <div class="container hero-content">
-            <span class="badge">HOMENS TAMBÉM SE CUIDAM</span>
-            <h1>Cuidados de alta qualidade com a atenção e o carinho que você merece</h1>
-            <p>No Jhony Barber, unimos simplicidade, ambiente acolhedor e técnicas especializadas para renovar seu visual e sua autoestima.</p>
+            <span class="badge" id="display-hero-badge">HOMENS TAMBÉM SE CUIDAM</span>
+            <h1 id="display-hero-title">Cuidados de alta qualidade com a atenção e o carinho que você merece</h1>
+            <p id="display-hero-desc">No Jhony Barber, unimos simplicidade, ambiente acolhedor e técnicas especializadas para renovar seu visual e sua autoestima.</p>
             <div class="hero-btns">
-                <a href="https://wa.me/5563984257185?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." target="_blank" class="btn btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> Agende pelo WhatsApp
+                <a href="https://wa.me/5563984257185?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." target="_blank" class="btn btn-whatsapp" id="btn-hero-whatsapp">
+                    <i class="fab fa-whatsapp"></i> <span id="display-hero-btn-wa">Agende pelo WhatsApp</span>
                 </a>
                 <a href="https://maps.google.com" id="btn-como-chegar-hero" target="_blank" class="btn btn-outline">
-                    <i class="fas fa-location-dot"></i> Como Chegar
+                    <i class="fas fa-location-dot"></i> <span id="display-hero-btn-maps">Como Chegar</span>
                 </a>
             </div>
         </div>
@@ -52,22 +52,22 @@
     <section id="sobre" class="about">
         <div class="container about-grid">
             <div class="about-text">
-                <span class="section-subtitle">CONHEÇA NOSSO ESPAÇO</span>
-                <h2>Um espaço feito pensando no seu bem-estar</h2>
-                <p>No <strong>Jhony Barber</strong>, acreditamos que cada detalhe importa. Desde a nossa decoração acolhedora até o atendimento atencioso, cada corte e procedimento é feito com muito carinho e dedicação.</p>
-                <p>Aqui você não vem apenas para cortar o cabelo ou fazer a barba — vem para relaxar, se sentir em casa e renovar a sua melhor versão.</p>
+                <span class="section-subtitle" id="display-about-subtitle">CONHEÇA NOSSO ESPAÇO</span>
+                <h2 id="display-about-title">Um espaço feito pensando no seu bem-estar</h2>
+                <p id="display-about-p1">No Jhony Barber, acreditamos que cada detalhe importa. Desde a nossa decoração acolhedora até o atendimento atencioso, cada corte e procedimento é feito com muito carinho e dedicação.</p>
+                <p id="display-about-p2">Aqui você não vem apenas para cortar o cabelo ou fazer a barba — vem para relaxar, se sentir em casa e renovar a sua melhor versão.</p>
                 <div class="features">
                     <div class="feature-item">
                         <i class="fas fa-heart"></i>
-                        <span>Atendimento Atencioso</span>
+                        <span id="display-feat-1">Atendimento Atencioso</span>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-couch"></i>
-                        <span>Ambiente Acolhedor</span>
+                        <span id="display-feat-2">Ambiente Acolhedor</span>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-cut"></i>
-                        <span>Excelência em Cada Detalhe</span>
+                        <span id="display-feat-3">Excelência em Cada Detalhe</span>
                     </div>
                 </div>
             </div>
@@ -78,9 +78,9 @@
     <section id="servicos" class="services">
         <div class="container">
             <div class="section-title">
-                <span class="section-subtitle">O QUE OFERECEMOS</span>
-                <h2>Nossos Serviços</h2>
-                <p>Confira nossos cuidados masculinos e infantis preparados especialmente para você.</p>
+                <span class="section-subtitle" id="display-services-subtitle">O QUE OFERECEMOS</span>
+                <h2 id="display-services-title">Nossos Serviços</h2>
+                <p id="display-services-desc">Confira nossos cuidados masculinos e infantis preparados especialmente para você.</p>
             </div>
 
             <div class="services-grid" id="services-grid-container">
@@ -89,17 +89,17 @@
         </div>
     </section>
 
-    <!-- Chamada Agendamento -->
+    <!-- Chamada Agendamento (CTA) -->
     <section class="cta-banner">
         <div class="container cta-container">
-            <h2>Pronto para renovar o visual?</h2>
-            <p>Agende seu horário agora mesmo de forma simples e rápida pelo WhatsApp.</p>
+            <h2 id="display-cta-title">Pronto para renovar o visual?</h2>
+            <p id="display-cta-desc">Agende seu horário agora mesmo de forma simples e rápida pelo WhatsApp.</p>
             <div class="cta-btns">
-                <a href="https://wa.me/5563984257185?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." target="_blank" class="btn btn-whatsapp btn-large">
-                    <i class="fab fa-whatsapp"></i> AGENDAR JÁ O SEU HORÁRIO
+                <a href="https://wa.me/5563984257185?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." target="_blank" class="btn btn-whatsapp btn-large" id="btn-cta-whatsapp">
+                    <i class="fab fa-whatsapp"></i> <span id="display-cta-btn-wa">AGENDAR JÁ O SEU HORÁRIO</span>
                 </a>
                 <a href="https://maps.google.com" id="btn-como-chegar-cta" target="_blank" class="btn btn-outline btn-large">
-                    <i class="fas fa-location-dot"></i> COMO CHEGAR
+                    <i class="fas fa-location-dot"></i> <span id="display-cta-btn-maps">COMO CHEGAR</span>
                 </a>
             </div>
         </div>
@@ -109,88 +109,26 @@
     <footer id="contato" class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <h3>JHONY BARBER</h3>
-                <p>Homens também se cuidam.</p>
+                <h3 id="display-footer-title">JHONY BARBER</h3>
+                <p id="display-footer-sub">Homens também se cuidam.</p>
                 <div class="social-links">
                     <a href="https://instagram.com" id="link-instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://facebook.com" id="link-facebook" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
                     <a href="https://maps.google.com" id="link-maps" target="_blank" title="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
-                    <a href="https://wa.me/5563984257185" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/5563984257185" id="link-whatsapp-footer" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
                 <p class="copyright">&copy; 2026 Jhony Barber. Todos os direitos reservados.</p>
             </div>
             <div class="footer-contact">
                 <h4>Contato & Agendamentos</h4>
-                <p><i class="fab fa-whatsapp"></i> (63) 98425-7185</p>
-                <p><i class="fas fa-clock"></i> Segunda a Sábado</p>
+                <p><i class="fab fa-whatsapp"></i> <span id="display-footer-phone">(63) 98425-7185</span></p>
+                <p><i class="fas fa-clock"></i> <span id="display-footer-hours">Segunda a Sábado</span></p>
                 <p class="admin-trigger-container">
-                    <button id="btn-admin-login" title="Painel Admin"><i class="fas fa-lock"></i> Admin</button>
+                    <a href="admin.html" id="btn-admin-page" title="Painel Admin"><i class="fas fa-lock"></i> Áreas do Admin</a>
                 </p>
             </div>
         </div>
     </footer>
-
-    <!-- Modal Admin -->
-    <div id="admin-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="admin-login-step">
-                <h2>Painel Administrativo</h2>
-                <p>Digite a senha de administrador:</p>
-                <input type="password" id="admin-password" placeholder="Sua senha...">
-                <button id="btn-confirm-login" class="btn btn-whatsapp" style="width: 100%; margin-top: 15px;">Entrar</button>
-                <p id="login-error" class="error-msg" style="color: #ff5555; margin-top: 10px; font-size: 0.9rem;"></p>
-            </div>
-            <div id="admin-panel-step" style="display: none;">
-                <h2>Painel de Gerenciamento</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Atualize os preços, serviços e redes sociais.</p>
-                
-                <h3>Redes Sociais & Localização</h3>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Instagram:</label>
-                    <input type="text" id="input-instagram" placeholder="https://instagram.com/seu_perfil" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Facebook:</label>
-                    <input type="text" id="input-facebook" placeholder="https://facebook.com/sua_pagina" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
-                </div>
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Link do Google Maps (Como Chegar):</label>
-                    <input type="text" id="input-maps" placeholder="https://maps.google.com/?q=barbearia" style="width: 100%; padding: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
-                </div>
-
-                <h3 style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">Gerenciar Serviços</h3>
-                <div id="admin-services-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;"></div>
-
-                <button id="btn-add-new-service" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent); margin-bottom: 15px;">
-                    <i class="fas fa-plus"></i> Adicionar Novo Serviço
-                </button>
-
-                <button id="btn-save-admin" class="btn btn-whatsapp" style="width: 100%; margin-top: 10px;">
-                    <i class="fas fa-save"></i> Salvar Alterações (Navegador)
-                </button>
-
-                <!-- Ferramentas de Backup & Exportação de Código -->
-                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color);">
-                    <h4 style="font-size: 0.9rem; color: var(--accent); margin-bottom: 10px;">Backup & Sincronização</h4>
-                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                        <button id="btn-export-json" class="btn btn-outline" style="flex: 1; font-size: 0.8rem; padding: 8px;">
-                            <i class="fas fa-download"></i> Baixar Backup (.json)
-                        </button>
-                        <button id="btn-import-trigger" class="btn btn-outline" style="flex: 1; font-size: 0.8rem; padding: 8px;">
-                            <i class="fas fa-upload"></i> Carregar Backup (.json)
-                        </button>
-                        <input type="file" id="input-import-json" accept=".json" style="display: none;">
-                    </div>
-                    <button id="btn-export-code" class="btn btn-outline" style="width: 100%; font-size: 0.8rem; padding: 8px; border-color: var(--accent); color: var(--accent);">
-                        <i class="fas fa-code"></i> Copiar Código para o script.js (Fixar para Todos)
-                    </button>
-                </div>
-
-                <button id="btn-logout-admin" class="btn btn-outline" style="width: 100%; margin-top: 15px; border-color: #ff5555; color: #ff5555;">Sair do Painel</button>
-            </div>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
