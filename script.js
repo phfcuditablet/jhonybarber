@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'selagem', title: 'Selagem', desc: 'Tratamento de alinhamento e redução de volume para cabelos masculinos.', price: 'R$ 90,00', icon: 'fas fa-pump-soap' },
         { id: 'selagem-e-corte', title: 'Selagem e Corte', desc: 'Tratamento completo de selagem junto com alinhamento do corte.', price: 'R$ 120,00', icon: 'fas fa-cut' },
         { id: 'remocao-nariz-orelha', title: 'Remoção de Pêlo Nariz ou Orelha', desc: 'Higiene prática e remoção precisa sem desconforto.', price: 'R$ 30,00', icon: 'fas fa-air-freshener' },
-        { id: 'remocao-axilas', title: 'Remoção de Pêlos das Axilas', desc: 'Cuidado e higiene essenciais para a sua rotina no dia a dia.', price: 'R$ 40,00', icon: 'fas fa-hand-holding-heart' },
+        { id: 'remocao-axilas', title: 'Remoção de Pêlos das Axilas', desc: 'Cuidado e higiene essenciais para a sua routine no dia a dia.', price: 'R$ 40,00', icon: 'fas fa-hand-holding-heart' },
         { id: 'depilacao-costas', title: 'Depilação das Costas', desc: 'Remoção eficiente de pêlos para maior conforto, bem-estar e higiene.', price: 'Consulte valor', icon: 'fas fa-spa' }
     ];
 
@@ -38,13 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'service-card';
             
-            // Verificar se o preço é 'Consulte valor' (ignorando maiúsculas/minúsculas)
             const isConsulteValor = service.price.trim().toLowerCase() === 'consulte valor';
             
             let priceElementHtml = '';
             if (isConsulteValor) {
                 const whatsappMsg = encodeURIComponent(`Olá! Gostaria de consultar o valor do serviço: ${service.title}.`);
-                priceElementHtml = `<a class="btn btn-whatsapp btn-large price-tag-link" href="https://wa.me/5563984257185?text=${whatsappMsg}" target="_blank"><i class="fab fa-whatsapp"></i> Consulte valor</a>`;
+                priceElementHtml = `<a class="price-tag price-tag-link" href="https://wa.me/5563984257185?text=${whatsappMsg}" target="_blank"><i class="fab fa-whatsapp"></i> Consulte valor</a>`;
             } else {
                 priceElementHtml = `<span class="price-tag">${service.price}</span>`;
             }
@@ -172,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Coletar dados dos campos editados
     function getUpdatedDataFromPanel() {
         const titleInputs = document.querySelectorAll('.admin-s-title');
         const priceInputs = document.querySelectorAll('.admin-s-price');
@@ -198,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return { updatedServices, updatedSocials };
     }
 
-    // Botão Salvar (localStorage no navegador)
     if (btnSaveAdmin) {
         btnSaveAdmin.addEventListener('click', () => {
             const { updatedServices, updatedSocials } = getUpdatedDataFromPanel();
@@ -216,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 1. Exportar Backup (.json)
     const btnExportJson = document.getElementById('btn-export-json');
     if (btnExportJson) {
         btnExportJson.addEventListener('click', () => {
@@ -236,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Importar Backup (.json)
     const btnImportTrigger = document.getElementById('btn-import-trigger');
     const inputImportJson = document.getElementById('input-import-json');
 
@@ -276,7 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Copiar Código para Fixar no script.js no GitHub
     const btnExportCode = document.getElementById('btn-export-code');
     if (btnExportCode) {
         btnExportCode.addEventListener('click', () => {
@@ -286,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const defaultSocials = ${JSON.stringify(updatedSocials, null, 4)};`;
             
             navigator.clipboard.writeText(jsSnippet).then(() => {
-                alert('Código copiado! Abra o script.js no seu computador/GitHub e substitua o bloco defaultServices inicial.');
+                alert('Código copiado!');
             }).catch(() => {
                 alert('Não foi possível copiar automaticamente.');
             });
