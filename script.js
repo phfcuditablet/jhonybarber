@@ -7,6 +7,41 @@ const defaultSiteData = {
     heroDesc: 'No Jhony Barber, unimos simplicidade, ambiente acolhedor e técnicas especializadas para renovar seu visual e sua autoestima.',
     heroBtnWa: 'Agende pelo WhatsApp',
     heroBtnMaps: 'Como Chegar',
+
+    teamSubtitle: 'NOSSOS TALENTOS',
+    teamTitle: 'Nossa Equipe de Barbeiros',
+    teamDesc: 'Profissionais altamente capacitados e com anos de estrada para garantir o seu melhor estilo.',
+    team: [
+        {
+            name: 'Jhony Silva',
+            role: 'MASTER BARBER & FUNDADOR',
+            exp: 'Mais de 12 anos de experiência especialista em cortes clássicos, degradês modernos e barba na toalha quente.',
+            photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+            instagram: 'https://instagram.com'
+        },
+        {
+            name: 'Alex Grinfield',
+            role: 'BARBEIRO ESPECIALISTA',
+            exp: '8 anos de carreira focado em cortes infantis, pigmentação de barba e acabamentos ultra precisos.',
+            photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+            instagram: 'https://instagram.com'
+        },
+        {
+            name: 'Lucas Richmond',
+            role: 'VISAGISTA & DESIGNER',
+            exp: '6 anos renovando visuais com técnicas avançadas de visagismo masculino e alinhamento de sobrancelha.',
+            photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+            instagram: 'https://instagram.com'
+        },
+        {
+            name: 'Carlos Swanson',
+            role: 'BARBEIRO SENIOR',
+            exp: '10 anos no mercado mestre em tratamentos capilares masculinos, selagem e química de pigmentação.',
+            photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
+            instagram: 'https://instagram.com'
+        }
+    ],
+
     aboutSubtitle: 'CONHEÇA NOSSO ESPAÇO',
     aboutTitle: 'Um espaço feito pensando no seu bem-estar',
     aboutP1: 'No Jhony Barber, acreditamos que cada detalhe importa. Desde a nossa decoração acolhedora até o atendimento atencioso, cada corte e procedimento é feito com muito carinho e dedicação.',
@@ -54,9 +89,17 @@ const defaultSiteData = {
 // Carregar dados salvos no localStorage ou usar os padrões
 let siteData = JSON.parse(localStorage.getItem('jhony_site_data')) || defaultSiteData;
 
+// Garantir retrocompatibilidade caso a chave team não exista em versões salvas antigas
+if (!siteData.team) {
+    siteData.team = defaultSiteData.team;
+    siteData.teamSubtitle = defaultSiteData.teamSubtitle;
+    siteData.teamTitle = defaultSiteData.teamTitle;
+    siteData.teamDesc = defaultSiteData.teamDesc;
+}
+
 // Função para atualizar os elementos da landing page pública
 function renderPublicPage() {
-    if (!document.getElementById('display-logo-title')) return; // Se não estiver na index, ignora
+    if (!document.getElementById('display-logo-title')) return;
 
     const setEl = (id, text) => {
         const el = document.getElementById(id);
@@ -70,6 +113,10 @@ function renderPublicPage() {
     setEl('display-hero-desc', siteData.heroDesc);
     setEl('display-hero-btn-wa', siteData.heroBtnWa);
     setEl('display-hero-btn-maps', siteData.heroBtnMaps);
+
+    setEl('display-team-subtitle', siteData.teamSubtitle);
+    setEl('display-team-title', siteData.teamTitle);
+    setEl('display-team-desc', siteData.teamDesc);
 
     setEl('display-about-subtitle', siteData.aboutSubtitle);
     setEl('display-about-title', siteData.aboutTitle);
@@ -93,7 +140,31 @@ function renderPublicPage() {
     setEl('display-footer-phone', siteData.footerPhone);
     setEl('display-footer-hours', siteData.footerHours);
 
-    // Atualizar links dinâmicos de WhatsApp e Redes Sociais
+    // Renderizar Equipe de Barbeiros (2 colunas por linha)
+    const teamContainer = document.getElementById('team-grid-container');
+    if (teamContainer && siteData.team) {
+        teamContainer.innerHTML = '';
+        siteData.team.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'team-card';
+            card.innerHTML = `
+                <div class="team-avatar-box">
+                    <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" alt="${member.name}">
+                </div>
+                <div class="team-info">
+                    <h3 class="team-name">${member.name}</h3>
+                    <span class="team-role">${member.role}</span>
+                    <p class="team-exp">${member.exp}</p>
+                    <div class="team-socials">
+                        ${member.instagram ? `<a href="${member.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>` : ''}
+                    </div>
+                </div>
+            `;
+            teamContainer.appendChild(card);
+        });
+    }
+
+    // Links dinâmicos de WhatsApp e Redes Sociais
     const waNumber = siteData.whatsappRaw || '5563984257185';
     const waUrl = `https://wa.me/${waNumber}?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.`;
     
@@ -107,7 +178,7 @@ function renderPublicPage() {
     if (document.getElementById('btn-como-chegar-hero')) document.getElementById('btn-como-chegar-hero').href = siteData.socials.maps;
     if (document.getElementById('btn-como-chegar-cta')) document.getElementById('btn-como-chegar-cta').href = siteData.socials.maps;
 
-    // Renderizar Serviços na página principal
+    // Renderizar Serviços
     const servicesContainer = document.getElementById('services-grid-container');
     if (servicesContainer) {
         servicesContainer.innerHTML = '';
@@ -136,9 +207,9 @@ function renderPublicPage() {
     }
 }
 
-// Carregar formulários e gerenciar edição no Painel Administrativo (`admin.html`)
+// Carregar formulários no Painel Administrativo (`admin.html`)
 function loadAdminPageData() {
-    if (!document.getElementById('edit-logo-title')) return; // Se não estiver na admin.html, ignora
+    if (!document.getElementById('edit-logo-title')) return;
 
     const setVal = (id, val) => {
         const el = document.getElementById(id);
@@ -152,6 +223,10 @@ function loadAdminPageData() {
     setVal('edit-hero-desc', siteData.heroDesc);
     setVal('edit-hero-btn-wa', siteData.heroBtnWa);
     setVal('edit-hero-btn-maps', siteData.heroBtnMaps);
+
+    setVal('edit-team-subtitle', siteData.teamSubtitle);
+    setVal('edit-team-title', siteData.teamTitle);
+    setVal('edit-team-desc', siteData.teamDesc);
 
     setVal('edit-about-subtitle', siteData.aboutSubtitle);
     setVal('edit-about-title', siteData.aboutTitle);
@@ -176,7 +251,53 @@ function loadAdminPageData() {
     setVal('edit-facebook', siteData.socials.facebook);
     setVal('edit-maps', siteData.socials.maps);
 
+    renderAdminTeamList();
     renderAdminServicesList();
+}
+
+// Renderizar Gerenciador da Equipe no Admin
+function renderAdminTeamList() {
+    const listContainer = document.getElementById('admin-team-list');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = '';
+    siteData.team.forEach((member, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'team-admin-card';
+        itemDiv.innerHTML = `
+            <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" class="team-admin-preview" id="img-preview-${index}">
+            <div class="team-admin-inputs">
+                <div class="row-inputs">
+                    <input type="text" class="admin-t-name form-control" value="${member.name}" placeholder="Nome do Barbeiro" style="flex: 2;">
+                    <input type="text" class="admin-t-role form-control" value="${member.role}" placeholder="Cargo / Especialidade" style="flex: 2;">
+                </div>
+                <div class="row-inputs">
+                    <input type="text" class="admin-t-photo form-control" value="${member.photo}" placeholder="URL da Foto do Rosto (http...)" style="flex: 3;" data-idx="${index}">
+                    <input type="text" class="admin-t-instagram form-control" value="${member.instagram || ''}" placeholder="Link Instagram" style="flex: 2;">
+                </div>
+                <textarea class="admin-t-exp form-control" placeholder="Tempo de experiência e resumo profissional...">${member.exp}</textarea>
+            </div>
+            <button type="button" class="btn-del-team" data-index="${index}" style="background: #ff5555; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer;"><i class="fas fa-trash"></i></button>
+        `;
+        listContainer.appendChild(itemDiv);
+    });
+
+    // Atualizar foto preview em tempo real ao digitar a URL
+    document.querySelectorAll('.admin-t-photo').forEach(input => {
+        input.addEventListener('input', (e) => {
+            const idx = e.target.getAttribute('data-idx');
+            const imgEl = document.getElementById(`img-preview-${idx}`);
+            if (imgEl) imgEl.src = e.target.value || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
+        });
+    });
+
+    document.querySelectorAll('.btn-del-team').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const idx = e.currentTarget.getAttribute('data-index');
+            siteData.team.splice(idx, 1);
+            renderAdminTeamList();
+        });
+    });
 }
 
 function renderAdminServicesList() {
@@ -189,12 +310,12 @@ function renderAdminServicesList() {
         itemDiv.style.cssText = 'background: var(--bg-primary); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid var(--border-color);';
         itemDiv.innerHTML = `
             <div style="display: flex; gap: 10px; margin-bottom: 8px;">
-                <input type="text" class="admin-s-title" value="${service.title}" placeholder="Título" style="flex: 2; padding: 6px; background: var(--bg-card); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
-                <input type="text" class="admin-s-price" value="${service.price}" placeholder="Preço" style="flex: 1; padding: 6px; background: var(--bg-card); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
+                <input type="text" class="admin-s-title form-control" value="${service.title}" placeholder="Título" style="flex: 2;">
+                <input type="text" class="admin-s-price form-control" value="${service.price}" placeholder="Preço" style="flex: 1;">
             </div>
             <div style="display: flex; gap: 10px;">
-                <input type="text" class="admin-s-desc" value="${service.desc}" placeholder="Descrição" style="flex: 3; padding: 6px; background: var(--bg-card); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
-                <input type="text" class="admin-s-icon" value="${service.icon || 'fas fa-cut'}" placeholder="Ícone" style="flex: 1; padding: 6px; background: var(--bg-card); border: 1px solid var(--border-color); color: white; border-radius: 4px;">
+                <input type="text" class="admin-s-desc form-control" value="${service.desc}" placeholder="Descrição" style="flex: 3;">
+                <input type="text" class="admin-s-icon form-control" value="${service.icon || 'fas fa-cut'}" placeholder="Ícone" style="flex: 1;">
                 <button type="button" class="btn-del-service" data-index="${index}" style="background: #ff5555; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;"><i class="fas fa-trash"></i></button>
             </div>
         `;
@@ -214,18 +335,37 @@ function renderAdminServicesList() {
 function getUpdatedDataFromAdminPage() {
     const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : '';
 
-    const titleInputs = document.querySelectorAll('.admin-s-title');
-    const priceInputs = document.querySelectorAll('.admin-s-price');
-    const descInputs = document.querySelectorAll('.admin-s-desc');
-    const iconInputs = document.querySelectorAll('.admin-s-icon');
+    // Coletar Barbeiros
+    const tNames = document.querySelectorAll('.admin-t-name');
+    const tRoles = document.querySelectorAll('.admin-t-role');
+    const tPhotos = document.querySelectorAll('.admin-t-photo');
+    const tExps = document.querySelectorAll('.admin-t-exp');
+    const tInstas = document.querySelectorAll('.admin-t-instagram');
+
+    const updatedTeam = [];
+    for (let i = 0; i < tNames.length; i++) {
+        updatedTeam.push({
+            name: tNames[i].value,
+            role: tRoles[i].value,
+            photo: tPhotos[i].value,
+            exp: tExps[i].value,
+            instagram: tInstas[i].value
+        });
+    }
+
+    // Coletar Serviços
+    const sTitles = document.querySelectorAll('.admin-s-title');
+    const sPrices = document.querySelectorAll('.admin-s-price');
+    const sDescs = document.querySelectorAll('.admin-s-desc');
+    const sIcons = document.querySelectorAll('.admin-s-icon');
 
     const updatedServices = [];
-    for (let i = 0; i < titleInputs.length; i++) {
+    for (let i = 0; i < sTitles.length; i++) {
         updatedServices.push({
-            title: titleInputs[i].value,
-            price: priceInputs[i].value,
-            desc: descInputs[i].value,
-            icon: iconInputs[i].value
+            title: sTitles[i].value,
+            price: sPrices[i].value,
+            desc: sDescs[i].value,
+            icon: sIcons[i].value
         });
     }
 
@@ -237,6 +377,12 @@ function getUpdatedDataFromAdminPage() {
         heroDesc: getVal('edit-hero-desc'),
         heroBtnWa: getVal('edit-hero-btn-wa'),
         heroBtnMaps: getVal('edit-hero-btn-maps'),
+
+        teamSubtitle: getVal('edit-team-subtitle'),
+        teamTitle: getVal('edit-team-title'),
+        teamDesc: getVal('edit-team-desc'),
+        team: updatedTeam,
+
         aboutSubtitle: getVal('edit-about-subtitle'),
         aboutTitle: getVal('edit-about-title'),
         aboutP1: getVal('edit-about-p1'),
@@ -244,13 +390,16 @@ function getUpdatedDataFromAdminPage() {
         aboutFeat1: getVal('edit-feat-1'),
         aboutFeat2: getVal('edit-feat-2'),
         aboutFeat3: getVal('edit-feat-3'),
+
         servicesSubtitle: getVal('edit-services-subtitle'),
         servicesTitle: getVal('edit-services-title'),
         servicesDesc: getVal('edit-services-desc'),
+
         ctaTitle: getVal('edit-cta-title'),
         ctaDesc: getVal('edit-cta-desc'),
         ctaBtnWa: getVal('edit-cta-btn-wa'),
         ctaBtnMaps: 'COMO CHEGAR',
+
         footerTitle: getVal('edit-logo-title'),
         footerSub: getVal('edit-logo-sub'),
         footerPhone: getVal('edit-footer-phone'),
@@ -269,6 +418,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPublicPage();
 
     // Eventos do Painel Admin (`admin.html`)
+    const btnAddTeamMember = document.getElementById('btn-add-team-member');
+    if (btnAddTeamMember) {
+        btnAddTeamMember.addEventListener('click', () => {
+            siteData.team.push({
+                name: 'Novo Barbeiro',
+                role: 'BARBEIRO PROFISSIONAL',
+                exp: 'Descrição da experiência na carreira.',
+                photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+                instagram: 'https://instagram.com'
+            });
+            renderAdminTeamList();
+        });
+    }
+
     const btnAddNewService = document.getElementById('btn-add-new-service');
     if (btnAddNewService) {
         btnAddNewService.addEventListener('click', () => {
@@ -318,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = (event) => {
                 try {
                     const importedData = JSON.parse(event.target.result);
-                    if (importedData.services && importedData.socials) {
+                    if (importedData.team && importedData.services) {
                         siteData = importedData;
                         localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
                         loadAdminPageData();
