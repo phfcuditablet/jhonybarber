@@ -148,7 +148,7 @@ function renderPublicPage() {
             card.className = 'team-card';
             card.innerHTML = `
                 <div class="team-avatar-box">
-                    <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" alt="${member.name}">
+                    <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" alt="${member.name}" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
                 </div>
                 <div class="team-info">
                     <h3 class="team-name">${member.name}</h3>
@@ -254,6 +254,42 @@ function loadAdminPageData() {
     renderAdminServicesList();
 }
 
+// Compressão de Imagens enviadas para não estourar a memória do navegador
+function compressImage(file, callback) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const MAX_WIDTH = 400;
+            const MAX_HEIGHT = 400;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+            } else {
+                if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+            callback(compressedBase64);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
 // Renderizar Gerenciador da Equipe no Admin
 function renderAdminTeamList() {
     const listContainer = document.getElementById('admin-team-list');
@@ -265,9 +301,9 @@ function renderAdminTeamList() {
         itemDiv.className = 'team-admin-card';
         itemDiv.innerHTML = `
             <div class="team-admin-left">
-                <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" class="team-admin-preview" id="img-preview-${index}">
+                <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" class="team-admin-preview" id="img-preview-${index}" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
                 <label class="btn-upload-photo">
-                    <i class="fas fa-camera"></i> Carregar Foto
+                    <i class="fas fa-camera"></i> Escolher Foto
                     <input type="file" class="admin-t-file-input" data-idx="${index}" accept="image/*" style="display:none;">
                 </label>
             </div>
@@ -277,7 +313,7 @@ function renderAdminTeamList() {
                     <input type="text" class="admin-t-role form-control" value="${member.role}" placeholder="Cargo / Especialidade" style="flex: 2;">
                 </div>
                 <div class="row-inputs">
-                    <input type="text" class="admin-t-photo form-control" value="${member.photo}" placeholder="URL da Foto de Rosto (ou upload)" style="flex: 3;" data-idx="${index}">
+                    <input type="text" class="admin-t-photo form-control" value="${member.photo}" placeholder="URL da Foto ou imagens/nome-da-foto.jpg" style="flex: 3;" data-idx="${index}">
                     <input type="text" class="admin-t-instagram form-control" value="${member.instagram || ''}" placeholder="Instagram (URL)" style="flex: 2;">
                 </div>
                 <textarea class="admin-t-exp form-control" placeholder="Descrição do tempo de experiência na carreira...">${member.exp}</textarea>
@@ -294,26 +330,23 @@ function renderAdminTeamList() {
         listContainer.appendChild(itemDiv);
     });
 
-    // Upload de Imagem local via File Reader (Converte para Base64)
+    // Upload de Imagem local com compressão
     document.querySelectorAll('.admin-t-file-input').forEach(input => {
         input.addEventListener('change', (e) => {
             const idx = e.target.getAttribute('data-idx');
             const file = e.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const base64Img = event.target.result;
+                compressImage(file, (base64Img) => {
                     const urlInput = document.querySelectorAll('.admin-t-photo')[idx];
                     const imgPreview = document.getElementById(`img-preview-${idx}`);
                     if (urlInput) urlInput.value = base64Img;
                     if (imgPreview) imgPreview.src = base64Img;
-                };
-                reader.readAsDataURL(file);
+                });
             }
         });
     });
 
-    // Atualização do preview ao digitar URL
+    // Atualização do preview ao digitar URL ou caminho local
     document.querySelectorAll('.admin-t-photo').forEach(input => {
         input.addEventListener('input', (e) => {
             const idx = e.target.getAttribute('data-idx');
@@ -326,8 +359,12 @@ function renderAdminTeamList() {
     document.querySelectorAll('.btn-single-team-save').forEach(btn => {
         btn.addEventListener('click', () => {
             siteData = getUpdatedDataFromAdminPage();
-            localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
-            alert('Dados do barbeiro salvos com sucesso!');
+            try {
+                localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
+                alert('Barbeiro salvo com sucesso no navegador!');
+            } catch(e) {
+                alert('Foto muito pesada para salvar no LocalStorage do navegador. Recomendamos colocar o arquivo da foto dentro da pasta imagens/ do projeto e digitar no campo o caminho: imagens/nome-da-foto.jpg');
+            }
         });
     });
 
@@ -507,8 +544,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('btn-save-admin-page')) {
         document.getElementById('btn-save-admin-page').addEventListener('click', () => {
             siteData = getUpdatedDataFromAdminPage();
-            localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
-            alert('Todas as alterações foram salvas com sucesso no navegador!');
+            try {
+                localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
+                alert('Todas as alterações foram salvas com sucesso no navegador!');
+            } catch (e) {
+                alert('Alguma foto enviada é muito grande para o LocalStorage do navegador. Use o caminho imagens/nome-foto.jpg ou fotos com menor resolução.');
+            }
         });
     }
 

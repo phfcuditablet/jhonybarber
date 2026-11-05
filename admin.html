@@ -99,7 +99,6 @@
             display: flex;
             gap: 20px;
             align-items: flex-start;
-            position: relative;
         }
         .team-admin-left {
             display: flex;
@@ -199,6 +198,16 @@
         .btn-new-custom:hover {
             background: rgba(212, 175, 55, 0.1);
         }
+        .info-alert-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -233,6 +242,10 @@
                 <button id="btn-add-team-member" class="btn-item-save" style="background: var(--accent); color: #121212;">
                     <i class="fas fa-plus"></i> Novo Profissional
                 </button>
+            </div>
+
+            <div class="info-alert-box">
+                <i class="fas fa-folder-open" style="color: var(--accent);"></i> <strong>Dica para Imagens Locais:</strong> Cole o caminho da imagem salva na pasta <code>imagens/</code> (exemplo: <code>imagens/barbeiro1.jpg</code>) ou selecione pelo botão de upload abaixo para usar fotos do computador.
             </div>
 
             <div class="form-group">
@@ -441,7 +454,7 @@
             const loginError = document.getElementById('login-error');
             const btnLogout = document.getElementById('btn-logout');
 
-            const ADMIN_PASSWORD = 'Maite@1409';
+            const ADMIN_PASSWORD = '123';
 
             if (sessionStorage.getItem('jhony_admin_logged') === 'true') {
                 authContainer.style.display = 'none';
