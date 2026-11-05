@@ -94,28 +94,110 @@
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
-            gap: 15px;
+            gap: 20px;
+            align-items: flex-start;
+            position: relative;
+        }
+        .team-admin-left {
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: 10px;
+            width: 120px;
         }
         .team-admin-preview {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--accent);
+            border: 3px solid var(--accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .btn-upload-photo {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .btn-upload-photo:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #121212;
         }
         .team-admin-inputs {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
         .row-inputs {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+        }
+        .action-bar-item {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .btn-item-save {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-item-save:hover {
+            background: #1ebe5d;
+        }
+        .btn-item-del {
+            background: #ff5555;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-item-del:hover {
+            background: #d44444;
+        }
+        .btn-new-custom {
+            background: transparent;
+            border: 2px dashed var(--accent);
+            color: var(--accent);
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .btn-new-custom:hover {
+            background: rgba(212, 175, 55, 0.1);
         }
     </style>
 </head>
@@ -136,17 +218,23 @@
         <div class="admin-header">
             <div>
                 <h1>Gestão da Landing Page</h1>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Edite os barbeiros/equipe, textos do site, serviços e sincronize com o GitHub.</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Edite os barbeiros, fotos de rosto, textos, serviços e sincronize tudo com o site.</p>
             </div>
             <div>
-                <a href="index.html" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;"><i class="fas fa-eye"></i> Ver Site Púbico</a>
+                <a href="index.html" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;"><i class="fas fa-eye"></i> Ver Site Público</a>
                 <button id="btn-logout" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px; border-color: #ff5555; color: #ff5555; margin-left: 10px;">Sair</button>
             </div>
         </div>
 
         <!-- Seção 0: Gerenciamento da Equipe / Profissionais -->
         <div class="form-section">
-            <h3><i class="fas fa-user-gear"></i> Profissionais & Barbeiros (Nossa Equipe)</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;"><i class="fas fa-user-gear"></i> Profissionais & Barbeiros (Nossa Equipe)</h3>
+                <button id="btn-add-team-member" class="btn-item-save" style="background: var(--accent); color: #121212;">
+                    <i class="fas fa-plus"></i> Novo Profissional
+                </button>
+            </div>
+
             <div class="form-group">
                 <label>Subtítulo da Seção Equipe:</label>
                 <input type="text" id="edit-team-subtitle" class="form-control">
@@ -160,11 +248,12 @@
                 <input type="text" id="edit-team-desc" class="form-control">
             </div>
 
-            <h4 style="color: var(--accent); font-size: 0.95rem; margin: 20px 0 10px;">Lista de Barbeiros / Profissionais:</h4>
+            <h4 style="color: var(--accent); font-size: 0.95rem; margin: 20px 0 10px;">Barbeiros Cadastrados (Editar Foto, Textos, Salvar e Excluir):</h4>
+            
             <div id="admin-team-list"></div>
 
-            <button id="btn-add-team-member" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent);">
-                <i class="fas fa-user-plus"></i> Adicionar Novo Profissional
+            <button id="btn-add-team-member-bottom" class="btn-new-custom">
+                <i class="fas fa-user-plus"></i> + Novo Barbeiro / Profissional
             </button>
         </div>
 
@@ -260,11 +349,13 @@
 
         <!-- Seção 5: Gerenciamento dos Serviços -->
         <div class="form-section">
-            <h3><i class="fas fa-cut"></i> Lista de Serviços & Preços</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;"><i class="fas fa-cut"></i> Lista de Serviços & Preços</h3>
+                <button id="btn-add-new-service" class="btn-item-save" style="background: var(--accent); color: #121212;">
+                    <i class="fas fa-plus"></i> Novo Serviço
+                </button>
+            </div>
             <div id="admin-services-list" style="margin-bottom: 15px;"></div>
-            <button id="btn-add-new-service" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent);">
-                <i class="fas fa-plus"></i> Adicionar Novo Serviço
-            </button>
         </div>
 
         <!-- Seção 6: Chamada de Agendamento (CTA) -->
@@ -316,12 +407,12 @@
         <!-- Ações do Admin -->
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
             <button id="btn-save-admin-page" class="btn btn-whatsapp" style="width: 100%; font-size: 1.1rem; padding: 15px;">
-                <i class="fas fa-save"></i> Salvar Alterações no Navegador
+                <i class="fas fa-save"></i> Salvar Todas as Alterações no Navegador
             </button>
 
             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
-                <h4 style="color: var(--accent); margin-bottom: 10px;"><i class="fas fa-cloud-arrow-up"></i> Sincronizar com o GitHub (Para todos os visitantes verem)</h4>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Clique no botão abaixo para copiar o código com todas as suas edições. Depois, basta colar dentro do seu arquivo <code>script.js</code> no GitHub!</p>
+                <h4 style="color: var(--accent); margin-bottom: 10px;"><i class="fas fa-cloud-arrow-up"></i> Sincronizar com o GitHub (Para publicar no site)</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Clique no botão abaixo para copiar o código atualizado. Depois, basta colar dentro do seu arquivo <code>script.js</code> no GitHub!</p>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <button id="btn-export-json" class="btn btn-outline" style="flex: 1; font-size: 0.85rem;">
@@ -334,7 +425,7 @@
                 </div>
 
                 <button id="btn-export-code" class="btn btn-outline" style="width: 100%; border-color: var(--accent); color: var(--accent); font-weight: bold; padding: 12px;">
-                    <i class="fas fa-code"></i> Copiar Código para o script.js (Fixar para Todos)
+                    <i class="fas fa-code"></i> Copiar Código Completo para script.js
                 </button>
             </div>
         </div>

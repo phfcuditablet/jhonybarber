@@ -1,9 +1,9 @@
 # Jhony Barber | Barbearia & Cuidado Masculino
 
-Landing page institucional completa com seção de equipe (barbeiros) em formato 2x2 e painel administrativo dedicado (`admin.html`).
+Landing page institucional completa com área de equipe (barbeiros) em formato 2x2 e painel administrativo avançado (`admin.html`) com upload de fotos de rosto, botões individuais de **Novo, Salvar, Editar e Excluir**.
 
 ## Estrutura do Projeto:
-- `index.html`: Página pública para clientes e visitantes com a nova seção de barbeiros/profissionais.
-- `admin.html`: Página administrativa para edição de fotos de perfil, experiência, nomes, cargos, exclusão/adição e botão salvar.
-- `style.css`: Estilização premium em Grid com tema escuro e detalhes dourados.
-- `script.js`: Gerenciamento dinâmico de conteúdos, persistência de dados e integração com o GitHub.
+- `index.html`: Landing page para os clientes com fotos redondas de rosto e tempo de experiência.
+- `admin.html`: Painel administrativo com suporte a upload de arquivos de fotos locais, edição de texto, botões de Novo, Salvar, Editar e Excluir por barbeiro/serviço.
+- `style.css`: Estilização premium em Grid escuro e dourado.
+- `script.js`: Gerenciamento e persistência de dados.

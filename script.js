@@ -89,7 +89,6 @@ const defaultSiteData = {
 // Carregar dados salvos no localStorage ou usar os padrões
 let siteData = JSON.parse(localStorage.getItem('jhony_site_data')) || defaultSiteData;
 
-// Garantir retrocompatibilidade caso a chave team não exista em versões salvas antigas
 if (!siteData.team) {
     siteData.team = defaultSiteData.team;
     siteData.teamSubtitle = defaultSiteData.teamSubtitle;
@@ -97,7 +96,7 @@ if (!siteData.team) {
     siteData.teamDesc = defaultSiteData.teamDesc;
 }
 
-// Função para atualizar os elementos da landing page pública
+// Renderizar Landing Page Pública
 function renderPublicPage() {
     if (!document.getElementById('display-logo-title')) return;
 
@@ -140,7 +139,7 @@ function renderPublicPage() {
     setEl('display-footer-phone', siteData.footerPhone);
     setEl('display-footer-hours', siteData.footerHours);
 
-    // Renderizar Equipe de Barbeiros (2 colunas por linha)
+    // Renderizar Barbeiros
     const teamContainer = document.getElementById('team-grid-container');
     if (teamContainer && siteData.team) {
         teamContainer.innerHTML = '';
@@ -164,7 +163,7 @@ function renderPublicPage() {
         });
     }
 
-    // Links dinâmicos de WhatsApp e Redes Sociais
+    // WhatsApp e Redes
     const waNumber = siteData.whatsappRaw || '5563984257185';
     const waUrl = `https://wa.me/${waNumber}?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.`;
     
@@ -207,7 +206,7 @@ function renderPublicPage() {
     }
 }
 
-// Carregar formulários no Painel Administrativo (`admin.html`)
+// Carregar Painel Admin
 function loadAdminPageData() {
     if (!document.getElementById('edit-logo-title')) return;
 
@@ -265,24 +264,56 @@ function renderAdminTeamList() {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'team-admin-card';
         itemDiv.innerHTML = `
-            <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" class="team-admin-preview" id="img-preview-${index}">
+            <div class="team-admin-left">
+                <img src="${member.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'}" class="team-admin-preview" id="img-preview-${index}">
+                <label class="btn-upload-photo">
+                    <i class="fas fa-camera"></i> Carregar Foto
+                    <input type="file" class="admin-t-file-input" data-idx="${index}" accept="image/*" style="display:none;">
+                </label>
+            </div>
             <div class="team-admin-inputs">
                 <div class="row-inputs">
                     <input type="text" class="admin-t-name form-control" value="${member.name}" placeholder="Nome do Barbeiro" style="flex: 2;">
                     <input type="text" class="admin-t-role form-control" value="${member.role}" placeholder="Cargo / Especialidade" style="flex: 2;">
                 </div>
                 <div class="row-inputs">
-                    <input type="text" class="admin-t-photo form-control" value="${member.photo}" placeholder="URL da Foto do Rosto (http...)" style="flex: 3;" data-idx="${index}">
-                    <input type="text" class="admin-t-instagram form-control" value="${member.instagram || ''}" placeholder="Link Instagram" style="flex: 2;">
+                    <input type="text" class="admin-t-photo form-control" value="${member.photo}" placeholder="URL da Foto de Rosto (ou upload)" style="flex: 3;" data-idx="${index}">
+                    <input type="text" class="admin-t-instagram form-control" value="${member.instagram || ''}" placeholder="Instagram (URL)" style="flex: 2;">
                 </div>
-                <textarea class="admin-t-exp form-control" placeholder="Tempo de experiência e resumo profissional...">${member.exp}</textarea>
+                <textarea class="admin-t-exp form-control" placeholder="Descrição do tempo de experiência na carreira...">${member.exp}</textarea>
+                <div class="action-bar-item">
+                    <button type="button" class="btn-item-save btn-single-team-save" data-idx="${index}">
+                        <i class="fas fa-floppy-disk"></i> Salvar Barbeiro
+                    </button>
+                    <button type="button" class="btn-item-del btn-del-team" data-index="${index}">
+                        <i class="fas fa-trash-can"></i> Excluir
+                    </button>
+                </div>
             </div>
-            <button type="button" class="btn-del-team" data-index="${index}" style="background: #ff5555; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer;"><i class="fas fa-trash"></i></button>
         `;
         listContainer.appendChild(itemDiv);
     });
 
-    // Atualizar foto preview em tempo real ao digitar a URL
+    // Upload de Imagem local via File Reader (Converte para Base64)
+    document.querySelectorAll('.admin-t-file-input').forEach(input => {
+        input.addEventListener('change', (e) => {
+            const idx = e.target.getAttribute('data-idx');
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const base64Img = event.target.result;
+                    const urlInput = document.querySelectorAll('.admin-t-photo')[idx];
+                    const imgPreview = document.getElementById(`img-preview-${idx}`);
+                    if (urlInput) urlInput.value = base64Img;
+                    if (imgPreview) imgPreview.src = base64Img;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+    // Atualização do preview ao digitar URL
     document.querySelectorAll('.admin-t-photo').forEach(input => {
         input.addEventListener('input', (e) => {
             const idx = e.target.getAttribute('data-idx');
@@ -291,11 +322,23 @@ function renderAdminTeamList() {
         });
     });
 
+    // Botão Salvar Individual do Barbeiro
+    document.querySelectorAll('.btn-single-team-save').forEach(btn => {
+        btn.addEventListener('click', () => {
+            siteData = getUpdatedDataFromAdminPage();
+            localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
+            alert('Dados do barbeiro salvos com sucesso!');
+        });
+    });
+
+    // Botão Excluir Barbeiro
     document.querySelectorAll('.btn-del-team').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const idx = e.currentTarget.getAttribute('data-index');
-            siteData.team.splice(idx, 1);
-            renderAdminTeamList();
+            if (confirm('Deseja realmente excluir este profissional?')) {
+                siteData.team.splice(idx, 1);
+                renderAdminTeamList();
+            }
         });
     });
 }
@@ -307,35 +350,51 @@ function renderAdminServicesList() {
     listContainer.innerHTML = '';
     siteData.services.forEach((service, index) => {
         const itemDiv = document.createElement('div');
-        itemDiv.style.cssText = 'background: var(--bg-primary); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid var(--border-color);';
+        itemDiv.style.cssText = 'background: var(--bg-primary); padding: 15px; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border-color);';
         itemDiv.innerHTML = `
-            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
-                <input type="text" class="admin-s-title form-control" value="${service.title}" placeholder="Título" style="flex: 2;">
-                <input type="text" class="admin-s-price form-control" value="${service.price}" placeholder="Preço" style="flex: 1;">
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <input type="text" class="admin-s-title form-control" value="${service.title}" placeholder="Nome do Serviço" style="flex: 2;">
+                <input type="text" class="admin-s-price form-control" value="${service.price}" placeholder="Preço (ex: R$ 50,00 ou Consulte valor)" style="flex: 1;">
             </div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" class="admin-s-desc form-control" value="${service.desc}" placeholder="Descrição" style="flex: 3;">
-                <input type="text" class="admin-s-icon form-control" value="${service.icon || 'fas fa-cut'}" placeholder="Ícone" style="flex: 1;">
-                <button type="button" class="btn-del-service" data-index="${index}" style="background: #ff5555; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;"><i class="fas fa-trash"></i></button>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <input type="text" class="admin-s-desc form-control" value="${service.desc}" placeholder="Descrição detalhada do serviço" style="flex: 3;">
+                <input type="text" class="admin-s-icon form-control" value="${service.icon || 'fas fa-cut'}" placeholder="Classe do Ícone FontAwesome" style="flex: 1;">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" class="btn-item-save btn-single-service-save" style="font-size: 0.8rem; padding: 6px 12px;">
+                    <i class="fas fa-floppy-disk"></i> Salvar Serviço
+                </button>
+                <button type="button" class="btn-item-del btn-del-service" data-index="${index}" style="font-size: 0.8rem; padding: 6px 12px;">
+                    <i class="fas fa-trash-can"></i> Excluir
+                </button>
             </div>
         `;
         listContainer.appendChild(itemDiv);
     });
 
+    document.querySelectorAll('.btn-single-service-save').forEach(btn => {
+        btn.addEventListener('click', () => {
+            siteData = getUpdatedDataFromAdminPage();
+            localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
+            alert('Serviço salvo com sucesso!');
+        });
+    });
+
     document.querySelectorAll('.btn-del-service').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const idx = e.currentTarget.getAttribute('data-index');
-            siteData.services.splice(idx, 1);
-            renderAdminServicesList();
+            if (confirm('Deseja excluir este serviço?')) {
+                siteData.services.splice(idx, 1);
+                renderAdminServicesList();
+            }
         });
     });
 }
 
-// Coletar todos os dados editados no painel Admin
+// Coletar Dados do Admin
 function getUpdatedDataFromAdminPage() {
     const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : '';
 
-    // Coletar Barbeiros
     const tNames = document.querySelectorAll('.admin-t-name');
     const tRoles = document.querySelectorAll('.admin-t-role');
     const tPhotos = document.querySelectorAll('.admin-t-photo');
@@ -353,7 +412,6 @@ function getUpdatedDataFromAdminPage() {
         });
     }
 
-    // Coletar Serviços
     const sTitles = document.querySelectorAll('.admin-s-title');
     const sPrices = document.querySelectorAll('.admin-s-price');
     const sDescs = document.querySelectorAll('.admin-s-desc');
@@ -417,27 +475,27 @@ function getUpdatedDataFromAdminPage() {
 document.addEventListener('DOMContentLoaded', () => {
     renderPublicPage();
 
-    // Eventos do Painel Admin (`admin.html`)
-    const btnAddTeamMember = document.getElementById('btn-add-team-member');
-    if (btnAddTeamMember) {
-        btnAddTeamMember.addEventListener('click', () => {
-            siteData.team.push({
-                name: 'Novo Barbeiro',
-                role: 'BARBEIRO PROFISSIONAL',
-                exp: 'Descrição da experiência na carreira.',
-                photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-                instagram: 'https://instagram.com'
-            });
-            renderAdminTeamList();
+    // Adicionar Barbeiro
+    const addTeamHandler = () => {
+        siteData.team.push({
+            name: 'Novo Barbeiro',
+            role: 'BARBEIRO PROFISSIONAL',
+            exp: 'Experiência e especialidade na carreira.',
+            photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+            instagram: 'https://instagram.com'
         });
-    }
+        renderAdminTeamList();
+    };
 
-    const btnAddNewService = document.getElementById('btn-add-new-service');
-    if (btnAddNewService) {
-        btnAddNewService.addEventListener('click', () => {
+    if (document.getElementById('btn-add-team-member')) document.getElementById('btn-add-team-member').addEventListener('click', addTeamHandler);
+    if (document.getElementById('btn-add-team-member-bottom')) document.getElementById('btn-add-team-member-bottom').addEventListener('click', addTeamHandler);
+
+    // Adicionar Serviço
+    if (document.getElementById('btn-add-new-service')) {
+        document.getElementById('btn-add-new-service').addEventListener('click', () => {
             siteData.services.push({
                 title: 'Novo Serviço',
-                desc: 'Descrição do serviço.',
+                desc: 'Descrição do novo serviço.',
                 price: 'Consulte valor',
                 icon: 'fas fa-cut'
             });
@@ -445,19 +503,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const btnSaveAdminPage = document.getElementById('btn-save-admin-page');
-    if (btnSaveAdminPage) {
-        btnSaveAdminPage.addEventListener('click', () => {
+    // Salvar Geral
+    if (document.getElementById('btn-save-admin-page')) {
+        document.getElementById('btn-save-admin-page').addEventListener('click', () => {
             siteData = getUpdatedDataFromAdminPage();
             localStorage.setItem('jhony_site_data', JSON.stringify(siteData));
-            alert('Alterações salvas com sucesso no seu navegador!');
+            alert('Todas as alterações foram salvas com sucesso no navegador!');
         });
     }
 
-    // Exportação de Backup JSON
-    const btnExportJson = document.getElementById('btn-export-json');
-    if (btnExportJson) {
-        btnExportJson.addEventListener('click', () => {
+    // Exportar JSON Backup
+    if (document.getElementById('btn-export-json')) {
+        document.getElementById('btn-export-json').addEventListener('click', () => {
             const dataToExport = getUpdatedDataFromAdminPage();
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
             const downloadAnchor = document.createElement('a');
@@ -469,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Importação de Backup JSON
+    // Importar JSON Backup
     const btnImportTrigger = document.getElementById('btn-import-trigger');
     const inputImportJson = document.getElementById('input-import-json');
     if (btnImportTrigger && inputImportJson) {
@@ -497,10 +554,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Gerador do trecho do `script.js` para atualizar o repositório no GitHub
-    const btnExportCode = document.getElementById('btn-export-code');
-    if (btnExportCode) {
-        btnExportCode.addEventListener('click', () => {
+    // Exportar Código para script.js
+    if (document.getElementById('btn-export-code')) {
+        document.getElementById('btn-export-code').addEventListener('click', () => {
             const currentData = getUpdatedDataFromAdminPage();
             const jsSnippet = `const defaultSiteData = ${JSON.stringify(currentData, null, 4)};`;
             navigator.clipboard.writeText(jsSnippet).then(() => {
