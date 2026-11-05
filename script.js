@@ -566,6 +566,21 @@ async function generateUpdatedZipPackage() {
 document.addEventListener('DOMContentLoaded', () => {
     renderPublicPage();
 
+    // Menu do topo (celular): abrir/fechar
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    if (navToggle && navMenu) {
+        const setMenu = (open) => {
+            navMenu.classList.toggle('open', open);
+            navToggle.setAttribute('aria-expanded', String(open));
+            navToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+        };
+        navToggle.addEventListener('click', () => setMenu(!navMenu.classList.contains('open')));
+        navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 900) setMenu(false); });
+    }
+
     // Adicionar Barbeiro
     const addTeamHandler = () => {
         siteData.team.push({

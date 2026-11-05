@@ -22,6 +22,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* o menu fixo não cobre os títulos ao clicar nos links */
 }
 
 body {
@@ -149,6 +150,89 @@ body {
 .btn-nav:hover {
     background-color: var(--accent-hover);
     color: #121212 !important;
+}
+
+/* Botão do menu (☰) — aparece apenas em telas pequenas */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Telas médias: aperta um pouco o espaçamento para tudo caber em uma linha */
+@media (max-width: 1100px) {
+    .nav-menu { gap: 18px; }
+    .nav-menu a { font-size: 0.9rem; }
+    .logo-title { font-size: 1.35rem; }
+}
+
+/* Tablet e celular: menu vira botão ☰ com painel suspenso */
+@media (max-width: 900px) {
+    .header { padding: 10px 0; }
+    .nav-container { gap: 12px; }
+    .logo { min-width: 0; }
+    .nav-toggle { display: flex; }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 6px 20px 18px;
+        background-color: #121212; /* opaco: o texto da página não aparece por trás */
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    .nav-menu.open { display: flex; }
+
+    .nav-menu a {
+        padding: 14px 4px;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-menu a.btn-nav {
+        margin-top: 16px;
+        padding: 14px 16px;
+        text-align: center;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-title { font-size: 1.2rem; letter-spacing: 0.5px; }
+    .logo-sub { font-size: 0.58rem; letter-spacing: 0.8px; }
 }
 
 /* Hero Section */
@@ -566,4 +650,14 @@ body {
 #btn-admin-page:hover {
     color: var(--accent);
     border-color: var(--accent);
+}
+
+/* Celulares muito pequenos (ex.: 320px): cartão da equipe em coluna para não estourar a tela */
+@media (max-width: 350px) {
+    .team-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .team-socials { justify-content: center; }
 }
